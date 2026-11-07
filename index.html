@@ -137,7 +137,11 @@
   <!-- 2 · ASPAVA USULÜ (sessiz) -->
   <section class="usul" aria-labelledby="usul-baslik">
     <div class="kap usul-ic">
-      <svg class="usul-tepsi" viewBox="0 0 400 400" aria-hidden="true"><use href="#t-tepsi"/></svg>
+      <figure class="usul-foto">
+        <img src="assets/img/aspava-sofrasi-838.webp" width="838" height="626" loading="lazy" decoding="async"
+             alt="Mogan Aspava'da bir sofra: ortada et döner tabağı, çevresinde salata, yoğurt, patates kızartması ve bulgur">
+        <figcaption>Mogan Aspava'da bir sofra</figcaption>
+      </figure>
       <div>
         <h2 id="usul-baslik" class="b2">Aspava usulü</h2>
         <ul class="usul-liste">
@@ -186,16 +190,7 @@
         <div class="pano-ic" role="tabpanel" tabindex="0" data-panel>
           <noscript><p>Menüyü görmek için JavaScript'i açın ya da arayın: 0534 824 31 19.</p></noscript>
         </div>
-        <svg class="doner" viewBox="0 0 160 210" aria-hidden="true" data-doner>
-          <rect x="18" y="186" width="124" height="10" rx="3" fill="#2b333d"/>
-          <path d="M80 6v186" stroke="#8d96a1" stroke-width="4"/>
-          <path d="M34 34c14-4 78-4 92 0 2 6-4 10-4 16s4 10 2 18-6 10-6 18 4 12 2 20-6 10-7 18 2 12-1 18-10 8-28 9-26 0-28-9-3-10-1-18-6-10-7-18 3-12 2-20-6-10-6-18 4-12 2-18-6-10-4-16z" fill="#8a4a2b" stroke="#e8c9a0" stroke-opacity=".5" stroke-width="1.5"/>
-          <g stroke="#4a2514" stroke-width="2" opacity=".55" fill="none"><path d="M38 52q42 6 84 0"/><path d="M40 74q40 6 78 0"/><path d="M42 96q38 6 74 0"/><path d="M45 118q35 5 68 0"/><path d="M48 140q32 5 62 0"/></g>
-          <path d="M112 40c4 30-2 70-10 112" stroke="#d09860" stroke-width="5" opacity=".55" fill="none"/>
-          <path d="M70 12c0-6 20-6 20 0v10H70z" fill="#c9382a"/>
-          <g class="doner-dilim"><path d="M104 60c8 2 12 10 9 24-6-6-10-14-9-24z" fill="#9c5731" stroke="#e8c9a0" stroke-opacity=".6"/></g>
-          <g class="doner-bicak"><path d="M116 52l22-44 7 3-20 46z" fill="#cfd6dd" stroke="#fff" stroke-width="1.2"/><path d="M138 8l8-18 6 3-8 18z" fill="#2b333d" stroke="#4a535e" stroke-width="1.5"/></g>
-        </svg>
+        <div class="pano-foto" data-pano-foto hidden></div>
       </div>
       <p class="menu-siparis">Eve sipariş: <a data-link="yemeksepeti" href="https://www.yemeksepeti.com/restaurant/q0pi/mogan-aspava-q0pi">Yemeksepeti</a> · <a data-link="migros" href="https://www.migros.com.tr/yemek/mogan-aspava-golbasi-gaziosmanpasa-mah-st-23eed">Migros Yemek</a></p>
     </div>
@@ -282,6 +277,30 @@
         <p class="durum" data-durum><span class="durum-nokta" aria-hidden="true"></span><span data-durum-yazi>Açık</span></p>
         <a class="dg dg-kirmizi" data-tel="rezervasyon" href="tel:+905348243119"><svg class="ik" aria-hidden="true"><use href="#i-tel"/></svg>Gelmeden ara</a>
       </div>
+      <figure class="gece-foto">
+        <img src="assets/img/cephe-gece-540.webp" srcset="assets/img/cephe-gece-540.webp 540w, assets/img/cephe-gece-720.webp 720w"
+             sizes="(min-width: 900px) 280px, 70vw" width="720" height="880" loading="lazy" decoding="async"
+             alt="Gece Mogan Aspava'nın cephesi: kırmızı ASPAVA tabelası, girişte kırmızı halı">
+        <figcaption>Ankara Caddesi'nde, gece</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 6b · MASADAN SESLER -->
+  <section class="yorum" id="yorumlar" aria-labelledby="yorum-baslik">
+    <div class="kap">
+      <div class="yorum-bas">
+        <h2 id="yorum-baslik" class="b2">Masadan sesler</h2>
+        <p>Misafirlerimizin Google, Yemeksepeti ve Migros Yemek'te yazdıklarından seçtiklerimiz.</p>
+      </div>
+      <div class="secim secim-uc" role="group" aria-label="Yorumları süz">
+        <button type="button" class="secim-dg" data-yorum="hepsi" aria-pressed="true">Hepsi</button>
+        <button type="button" class="secim-dg" data-yorum="salonda" aria-pressed="false">Salonda</button>
+        <button type="button" class="secim-dg" data-yorum="pakette" aria-pressed="false">Pakette</button>
+      </div>
+      <ul class="yorum-serit" data-yorumlar></ul>
+      <p class="ekran-oku" aria-live="polite" data-yorum-duyuru></p>
+      <p class="yorum-alt">Bütün yorumlar: <a data-link="haritaKart" href="https://maps.google.com/?cid=16174781775289406932">Google Haritalar</a> · <a data-link="yemeksepeti" href="https://www.yemeksepeti.com/restaurant/q0pi/mogan-aspava-q0pi">Yemeksepeti</a></p>
     </div>
   </section>
 
@@ -360,7 +379,7 @@
         </ul>
       </div>
     </div>
-    <p class="kunye">Fotoğraflar: Mogan Gölü gün batımı, Vikiçizer, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Mogan_G%C3%B6l%C3%BC.JPG">Wikimedia Commons</a> · Mogan Parkı seyir kulesi, Tevfik Teker, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Lake_Mogan.jpg">Wikimedia Commons</a> · Göl kıyısı, İZGİ ÖRS, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:G%C3%B6l_Manzara.jpg">Wikimedia Commons</a>. Fotoğraflar boyutlandırıldı. Harita verisi © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap katkıda bulunanlar</a>, ODbL.</p>
+    <p class="kunye">Fotoğraflar: Mogan Gölü gün batımı, Vikiçizer, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Mogan_G%C3%B6l%C3%BC.JPG">Wikimedia Commons</a> · Mogan Parkı seyir kulesi, Tevfik Teker, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Lake_Mogan.jpg">Wikimedia Commons</a> · Göl kıyısı, İZGİ ÖRS, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:G%C3%B6l_Manzara.jpg">Wikimedia Commons</a>. Fotoğraflar boyutlandırıldı. Yemek ve mekan görselleri: Mogan Aspava'nın Instagram hesabı ve Yemeksepeti sayfası. Yorumlar: Google, Yemeksepeti ve Migros Yemek'teki herkese açık misafir yorumlarından kısa alıntılar. Harita verisi © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap katkıda bulunanlar</a>, ODbL.</p>
   </div>
 </footer>
 

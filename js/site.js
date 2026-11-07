@@ -137,12 +137,37 @@
   gorununce(sahne, .35, function () { if (!sofraKuruldu) sofraKur("salonda"); });
 
   /* ---------- Menü sekmeleri ---------- */
-  var sekmeKutu = $("[data-sekmeler]"), panel = $("[data-panel]"), pano = $("[data-pano]"), doner = $("[data-doner]");
-  function donerKes() {
-    if (azHareket || !doner) return;
-    doner.classList.remove("kes");
-    void doner.getBoundingClientRect();
-    doner.classList.add("kes");
+  var sekmeKutu = $("[data-sekmeler]"), panel = $("[data-panel]"), pano = $("[data-pano]"), panoFoto = $("[data-pano-foto]");
+  var panoGorunur = false;
+  function el(ad, ozellik) {
+    var e = document.createElement(ad);
+    Object.keys(ozellik || {}).forEach(function (k) { if (ozellik[k] !== undefined) e.setAttribute(k, ozellik[k]); });
+    return e;
+  }
+  function videoOynat() {
+    var v = panoFoto && $("video", panoFoto);
+    if (!v || azHareket) return;
+    if (panoGorunur) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } else { v.pause(); }
+  }
+  function fotoGoster(kat) {
+    if (!panoFoto) return;
+    panoFoto.innerHTML = "";
+    var f = kat.foto;
+    pano.classList.toggle("foto-var", !!f);
+    panoFoto.hidden = !f;
+    if (!f) return;
+    if (f.video) {
+      var v = el("video", { poster: f.poster, width: f.genis, height: f.yuksek, preload: "none", "aria-label": f.alt });
+      v.muted = true; v.loop = true; v.playsInline = true; v.setAttribute("muted", ""); v.setAttribute("playsinline", "");
+      if (azHareket) v.controls = true;
+      v.appendChild(el("source", { src: f.video, type: "video/mp4" }));
+      panoFoto.appendChild(v);
+    } else {
+      panoFoto.appendChild(el("img", { src: f.src, alt: f.alt, width: f.genis, height: f.yuksek, loading: "lazy", decoding: "async" }));
+    }
+    if (f.ek) panoFoto.appendChild(el("img", { src: f.ek.src, alt: f.ek.alt, width: f.ek.genis, height: f.ek.yuksek, loading: "lazy", decoding: "async", "class": "pano-foto-ek" }));
+    if (!azHareket) { panoFoto.classList.remove("gir"); void panoFoto.offsetWidth; panoFoto.classList.add("gir"); }
+    videoOynat();
   }
   function sekmeSec(i, odakla) {
     var kat = V.menu[i];
@@ -163,8 +188,7 @@
     $("h3", panel).textContent = kat.ad;
     lis.forEach(function (li) { $("ul", panel).appendChild(li); });
     if (!azHareket) { panel.classList.remove("gir"); void panel.offsetWidth; panel.classList.add("gir"); }
-    pano.classList.toggle("doner-acik", kat.id === "doner");
-    if (kat.id === "doner" && odakla !== null) donerKes();
+    fotoGoster(kat);
   }
   if (sekmeKutu) {
     V.menu.forEach(function (kat, i) {
@@ -185,7 +209,34 @@
       sekmeSec((yeni + n) % n, true);
     });
     sekmeSec(0, null);
-    gorununce(pano, .5, donerKes);
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (ks) {
+        ks.forEach(function (k) { panoGorunur = k.isIntersecting; videoOynat(); });
+      }, { threshold: .35 }).observe(pano);
+    }
+  }
+
+  /* ---------- Masadan sesler: Hepsi / Salonda / Pakette ---------- */
+  var serit = $("[data-yorumlar]");
+  if (serit && V.yorumlar) {
+    var KAYNAK_ADI = { "Google": "Google yorumu", "Yemeksepeti": "Yemeksepeti yorumu", "Migros Yemek": "Migros Yemek yorumu" };
+    V.yorumlar.forEach(function (y) {
+      var li = el("li", { "class": "fis", "data-yer": y.yer });
+      var bq = el("blockquote"), p = el("p"), alt = el("p", { "class": "fis-alt" }), etiket = el("span", { "class": "fis-yer" });
+      p.textContent = "“" + y.metin + "”";
+      alt.textContent = (KAYNAK_ADI[y.kaynak] || y.kaynak) + " · " + y.tarih;
+      etiket.textContent = y.yer === "pakette" ? "Pakette" : "Salonda";
+      bq.appendChild(p); li.appendChild(etiket); li.appendChild(bq); li.appendChild(alt);
+      serit.appendChild(li);
+    });
+    var yorumSuz = function (yer) {
+      var sayi = 0;
+      $$("[data-yorum]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.yorum === yer)); });
+      $$(".fis", serit).forEach(function (li) { var goster = yer === "hepsi" || li.dataset.yer === yer; li.hidden = !goster; if (goster) sayi++; });
+      serit.scrollLeft = 0;
+      $("[data-yorum-duyuru]").textContent = sayi + " yorum gösteriliyor.";
+    };
+    $$("[data-yorum]").forEach(function (b) { b.addEventListener("click", function () { yorumSuz(b.dataset.yorum); }); });
   }
 
   /* ---------- Göle 500 m: kaydırdıkça rota ---------- */

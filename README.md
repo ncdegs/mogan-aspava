@@ -14,6 +14,8 @@ Saat, telefonlar, bağlantılar, ikramlar ve menü tek dosyada: `js/veri.js`. Sa
   - Mogan Gölü gün batımı: Vikiçizer, https://commons.wikimedia.org/wiki/File:Mogan_G%C3%B6l%C3%BC.JPG
   - Mogan Parkı seyir kulesi: Tevfik Teker, https://commons.wikimedia.org/wiki/File:Lake_Mogan.jpg
   - Göl kıyısı: İZGİ ÖRS, https://commons.wikimedia.org/wiki/File:G%C3%B6l_Manzara.jpg
+- Yemek ve mekan görselleri: Mogan Aspava'nın Instagram hesabındaki videolardan kareler (@moganaspava) ve restoranın Yemeksepeti sayfasındaki ürün görselleri.
+- Misafir yorumları: Google, Yemeksepeti ve Migros Yemek'teki herkese açık yorumlardan kısa alıntılar (adsız).
 - Harita verisi: © OpenStreetMap katkıda bulunanlar (ODbL), https://www.openstreetmap.org/copyright. Rota: OSRM.
 - Yazı tipleri: Anybody ve Barlow (SIL Open Font License; `assets/fonts/OFL_*.txt`).
 - Çizimler ve kod: bu depoya özel; "Mogan Aspava" adı ve logosu işletmeye aittir.
