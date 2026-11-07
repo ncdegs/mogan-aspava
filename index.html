@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mogan Aspava · Gölbaşı, Ankara</title>
-<meta name="description" content="Mogan Aspava, 1988'den beri Gölbaşı'nda: et döner, kebap, pide ve aspava usulü ikram sofrası. Ankara Cd. No:116/C. Rezervasyon 0534 824 31 19.">
+<meta name="description" content="Mogan Aspava, 1988'den beri Gölbaşı'nda: et döner, kebap, pide ve sınırsız ikramlı aspava sofrası. 7/24 açık. Ankara Cd. No:116/C. Rezervasyon 0534 824 31 19.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#10151c">
 <meta property="og:type" content="restaurant">
 <meta property="og:locale" content="tr_TR">
 <meta property="og:title" content="Mogan Aspava · Gölbaşı, Ankara">
-<meta property="og:description" content="Et döner, kebap, pide ve aspava usulü ikram sofrası. 1988'den beri Gölbaşı'nda.">
+<meta property="og:description" content="Et döner, kebap, pide ve sınırsız ikramlı aspava sofrası. 1988'den beri Gölbaşı'nda.">
 <meta property="og:image" content="https://ncdegs.github.io/mogan-aspava/assets/img/og.jpg">
 <meta property="og:url" content="https://ncdegs.github.io/mogan-aspava/">
 <meta property="og:image:width" content="1200">
@@ -19,6 +19,20 @@
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/anybody-var.woff" as="font" type="font/woff" crossorigin>
 <link rel="stylesheet" href="css/site.css">
+<script src="js/veri.js"></script>
+<script>
+/* Hareket kararı ve fotoğraf yerleştirici: sayfa çizilmeden önce çalışır. */
+document.documentElement.classList.add(window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "az-hareket" : "hareket");
+window.MOGAN_FOTO = function (img) {
+  var f = window.MOGAN && window.MOGAN.fotolar && window.MOGAN.fotolar[img.getAttribute("data-foto")];
+  if (!f || !f.src) return null;
+  if (f.srcset) img.setAttribute("srcset", f.srcset); else img.removeAttribute("srcset");
+  img.setAttribute("width", f.genis); img.setAttribute("height", f.yuksek);
+  img.setAttribute("alt", f.alt || "");
+  if (img.getAttribute("src") !== f.src) img.setAttribute("src", f.src);
+  return f;
+};
+</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -27,6 +41,7 @@
   "image": "https://ncdegs.github.io/mogan-aspava/assets/img/og.jpg",
   "url": "https://ncdegs.github.io/mogan-aspava/",
   "foundingDate": "1988",
+  "founder": [{ "@type": "Person", "name": "Erol Akgeyik" }, { "@type": "Person", "name": "Cemal Çetinkaya" }],
   "servesCuisine": ["Döner", "Kebap", "Pide", "Lahmacun"],
   "hasMenu": "#menu",
   "acceptsReservations": true,
@@ -81,15 +96,16 @@
   </defs>
 </svg>
 
-<header class="ust">
+<header class="ust" data-ust>
   <div class="kap ust-ic">
     <a class="marka" href="#vitrin" aria-label="Mogan Aspava, sayfa başı">
       <span class="marka-mogan">MOGAN</span><span class="marka-aspava">ASPAVA</span>
     </a>
     <nav class="ust-nav" aria-label="Sayfa içi">
-      <a href="#sofra">Sofra</a>
+      <a href="#sofra">İkram</a>
       <a href="#menu">Menü</a>
       <a href="#gol">Göl</a>
+      <a class="yalniz-genis" href="#mutfak">Mutfak</a>
       <a class="yalniz-genis" href="#gruplar">Gruplar</a>
     </nav>
     <div class="ust-eylem">
@@ -102,23 +118,26 @@
 
 <main id="icerik">
 
-  <!-- 1 · VİTRİN -->
-  <section class="vitrin" id="vitrin" aria-labelledby="vitrin-baslik">
-    <div class="kap vitrin-ic">
-      <div class="vitrin-ust">
-        <h1 id="vitrin-baslik" class="vitrin-mogan"><span class="isik">MOGAN</span><span class="ekran-oku"> Aspava</span></h1>
-        <p class="levha isik isik-gec" data-levha>
-          <span class="levha-nokta" aria-hidden="true"></span>
-          <span class="levha-buyuk" data-levha-buyuk>7/24</span>
-          <span class="levha-kucuk" data-levha-kucuk>AÇIK</span>
-        </p>
-      </div>
-      <div class="tabela isik" aria-hidden="true">
-        <span class="tabela-ray"></span>
-        <span>A</span><span>S</span><span>P</span><span>A</span><span>V</span><span>A</span>
-      </div>
+  <!-- 1 · AÇILIŞ: gece cephesi, tabela yanar -->
+  <section class="vitrin vitrin--genis" id="vitrin" aria-labelledby="vitrin-baslik">
+    <div class="vitrin-foto" data-vitrin-foto>
+      <img data-foto="heroGece" src="assets/img/cephe-gece-genis-1024.webp" srcset="assets/img/cephe-gece-genis-720.webp 720w, assets/img/cephe-gece-genis-1024.webp 1024w" width="1024" height="739" sizes="100vw" fetchpriority="high" decoding="async"
+           alt="Gece Mogan Aspava: ışıklı ASPAVA tabelası ve geometrik desenli cephe, girişte yeşil halı, dışarıdaki masalarda misafirler">
+      <script>(function (img) { var f = window.MOGAN_FOTO(img); if (f) img.closest(".vitrin").classList.toggle("vitrin--genis", f.genis >= 1000); })(document.currentScript.previousElementSibling);</script>
+      <span class="vitrin-perde" aria-hidden="true"></span>
+      <span class="vitrin-karart" data-vitrin-karart aria-hidden="true"></span>
+    </div>
+    <div class="kap vitrin-ic" data-vitrin-ic>
       <div class="vitrin-alt">
-        <p class="vitrin-giris">Gölbaşı'nda, Ankara Caddesi'nde et döner, kebap ve pide. Ana yemeğin yanında aspava usulü ikram sofrası gelir.</p>
+        <div class="vitrin-sol">
+          <p class="levha isik" data-levha>
+            <span class="levha-nokta" aria-hidden="true"></span>
+            <span class="levha-buyuk" data-levha-buyuk>7/24</span>
+            <span class="levha-kucuk" data-levha-kucuk>AÇIK</span>
+          </p>
+          <h1 id="vitrin-baslik" class="vitrin-baslik"><span class="ekran-oku">Mogan Aspava: </span>Gölbaşı'nda, 1988'den beri</h1>
+          <p class="vitrin-giris">Ankara Caddesi'nde et döner, kebap ve pide. Ana yemeğin yanına sınırsız ikram sofrası gelir.</p>
+        </div>
         <div class="vitrin-eylem">
           <a class="dg dg-kirmizi dg-ana" data-tel="rezervasyon" href="tel:+905348243119">
             <svg class="ik ik-buyuk" aria-hidden="true"><use href="#i-tel"/></svg>
@@ -134,47 +153,108 @@
     </div>
   </section>
 
-  <!-- 2 · ASPAVA USULÜ (sessiz) -->
-  <section class="usul" aria-labelledby="usul-baslik">
-    <div class="kap usul-ic">
-      <figure class="usul-foto">
-        <img src="assets/img/aspava-sofrasi-838.webp" width="838" height="626" loading="lazy" decoding="async"
-             alt="Mogan Aspava'da bir sofra: ortada et döner tabağı, çevresinde salata, yoğurt, patates kızartması ve bulgur">
-        <figcaption>Mogan Aspava'da bir sofra</figcaption>
-      </figure>
-      <div>
-        <h2 id="usul-baslik" class="b2">Aspava usulü</h2>
-        <ul class="usul-liste">
-          <li>Ankara'da aspava böyle bilinir: ana yemeğini söylersin, yanına ikram tabakları gelir.</li>
-          <li>Ortada senin yemeğin, etrafında salata, çiğ köfte, patates; sonunda irmik helvası.</li>
-          <li>Mogan Aspava bu sofrayı 1988'den beri Gölbaşı'nda kuruyor.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+  <div class="girih-serit" aria-hidden="true"></div>
 
-  <!-- 3 · SOFRAYI KUR (imza etkileşim) -->
+  <!-- 2 · SINIRSIZ İKRAM: gerçek sofradan gümüş tepsiye -->
   <section class="sofra" id="sofra" aria-labelledby="sofra-baslik">
     <div class="kap sofra-ic">
       <div class="sofra-metin">
-        <h2 id="sofra-baslik" class="b2">Ana yemeğin yanında sofra gelir</h2>
-        <p>Salonda ve pakette gelen ikramlar biraz farklı. Birini seçin, sofra kurulsun.</p>
-        <div class="secim" role="group" aria-label="Sofrayı nerede görmek istersiniz">
+        <h2 id="sofra-baslik" class="b2">Sınırsız ikram</h2>
+        <p>Ana yemeğini söylersin, yanına ikram tabakları gelir. Ankara'da aspava böyle bilinir; Mogan Aspava bu sofrayı 1988'den beri kuruyor.</p>
+        <div class="secim" role="group" aria-label="İkram sofrası">
           <button type="button" class="secim-dg" data-sofra="salonda" aria-pressed="false">Salonda</button>
           <button type="button" class="secim-dg" data-sofra="pakette" aria-pressed="false">Pakette</button>
         </div>
         <p class="sofra-not" data-sofra-not></p>
         <p class="ekran-oku" aria-live="polite" data-sofra-duyuru></p>
       </div>
-      <div class="sofra-sahne" data-sofra-sahne>
-        <svg class="sofra-tepsi" viewBox="0 0 400 400" aria-hidden="true"><use href="#t-tepsi"/></svg>
-        <div class="tabak tabak-ana" data-ana aria-hidden="true">
-          <svg viewBox="0 0 100 100"><use href="#t-ana"/></svg>
-          <span class="tabak-ad">Ana yemeğin</span>
+      <div class="sofra-gorsel" data-sofra-gorsel>
+        <figure class="sofra-foto" data-sofra-foto>
+          <img src="assets/img/aspava-sofrasi-838.webp" width="838" height="626" loading="lazy" decoding="async"
+               alt="Mogan Aspava'da bir sofra: ortada et döner tabağı, çevresinde salata, yoğurt, patates kızartması ve bulgur">
+          <figcaption>Mogan Aspava'da bir sofra</figcaption>
+        </figure>
+        <div class="sofra-sahne" data-sofra-sahne>
+          <svg class="sofra-tepsi" data-tepsi viewBox="0 0 400 400" aria-hidden="true"><use href="#t-tepsi"/></svg>
+          <div class="tabak tabak-ana" data-ana aria-hidden="true">
+            <svg viewBox="0 0 100 100"><use href="#t-ana"/></svg>
+            <span class="tabak-ad">Ana yemeğin</span>
+          </div>
+          <div data-tabaklar aria-hidden="true"></div>
         </div>
-        <div data-tabaklar aria-hidden="true"></div>
+      </div>
+      <div class="sofra-masalar">
+        <figure>
+          <div class="foto-kutu"><img src="assets/img/ig-ikram-masa-440.webp" srcset="assets/img/ig-ikram-masa-440.webp 440w, assets/img/ig-ikram-masa-720.webp 720w" width="720" height="955" sizes="(min-width: 900px) 220px, 45vw" loading="lazy" decoding="async"
+               alt="Pencere kenarında bir masa: ortada lavaş ve kebap, çevresinde salata, çiğ köfte, ezme ve patates tabakları"></div>
+          <figcaption><a data-link="igIkramMasa" href="https://www.instagram.com/p/DIRWm25qB5e/">Pencere kenarında</a></figcaption>
+        </figure>
+        <figure>
+          <div class="foto-kutu"><img src="assets/img/ig-meze-masa-440.webp" srcset="assets/img/ig-meze-masa-440.webp 440w, assets/img/ig-meze-masa-720.webp 720w" width="720" height="748" sizes="(min-width: 900px) 220px, 45vw" loading="lazy" decoding="async"
+               alt="İkram tabaklarıyla kurulmuş bir masa: yoğurt, salata, patates kızartması ve çiçekli vazo"></div>
+          <figcaption><a data-link="igMezeMasa" href="https://www.instagram.com/p/DCg73Nmq3LP/">Kurulmuş bir masa</a></figcaption>
+        </figure>
       </div>
       <noscript><p>Salonda: Mevsim salatası, Çiğ köfte, Patates kızartması, Ezme, Yoğurt, Dondurmalı irmik helvası, Çay. Pakette: Mevsim salatası, Çiğ köfte, Patates kızartması, İrmik helvası.</p></noscript>
+    </div>
+  </section>
+
+  <div class="girih-serit" aria-hidden="true"></div>
+
+  <!-- 3 · MUTFAKTAN: kepenk gibi açılan kareler -->
+  <section class="mutfak" id="mutfak" aria-labelledby="mutfak-baslik">
+    <div class="mutfak-sahne" data-mutfak>
+      <div class="kap mutfak-ic">
+        <div class="mutfak-metin">
+          <h2 id="mutfak-baslik" class="b2">Mutfaktan</h2>
+          <p>Döner ocağının, ızgaranın ve pide fırınının başından.</p>
+          <div class="mutfak-ilerleme" aria-hidden="true"><span data-ilerleme></span></div>
+        </div>
+        <ol class="mutfak-kareler" data-kareler>
+          <li class="kare"><figure>
+            <div class="kare-cerceve">
+              <img src="assets/img/ig-ustalar-tepsi-540.webp" srcset="assets/img/ig-ustalar-tepsi-540.webp 540w, assets/img/ig-ustalar-tepsi-720.webp 720w" sizes="(min-width: 900px) 620px, 80vw" width="720" height="900" loading="lazy" decoding="async" alt="İki usta mutfakta, ellerinde közlenmiş biberli kocaman bir kebap tepsisi">
+              <span class="kare-golge"></span>
+            </div>
+            <figcaption><span class="kare-ad">Ustalar</span><span class="kare-alt">Kalabalık bir sofranın tepsisi hazır.</span></figcaption>
+          </figure></li>
+          <li class="kare"><figure>
+            <div class="kare-cerceve">
+              <video data-mutfak-video poster="assets/img/doner-kesim-poster-540.webp" width="540" height="675" preload="none" muted loop playsinline aria-label="Ustanın et döneri kesişi, sessiz kısa video"><source src="assets/video/doner-kesim.mp4" type="video/mp4"></video>
+              <span class="kare-golge"></span>
+            </div>
+            <figcaption><span class="kare-ad">Et döner</span><span class="kare-alt">Bıçağın altında, ince ince.</span></figcaption>
+          </figure></li>
+          <li class="kare"><figure>
+            <div class="kare-cerceve">
+              <img src="assets/img/iskender-720.webp" srcset="assets/img/iskender-540.webp 540w, assets/img/iskender-720.webp 720w" sizes="(min-width: 900px) 560px, 80vw" width="720" height="900" loading="lazy" decoding="async" alt="Tereyağı dökülmüş iskender tabakları">
+              <span class="kare-golge"></span>
+            </div>
+            <figcaption><span class="kare-ad">İskender</span><span class="kare-alt">Üstüne tereyağı.</span></figcaption>
+          </figure></li>
+          <li class="kare"><figure>
+            <div class="kare-cerceve">
+              <img src="assets/img/pide-firin-540.webp" width="540" height="675" loading="lazy" decoding="async" alt="Pide ustası fırının başında, arkası dönük; tezgâhta açılmış hamurlar">
+              <span class="kare-golge"></span>
+            </div>
+            <figcaption><span class="kare-ad">Pide</span><span class="kare-alt">Fırının başında.</span></figcaption>
+          </figure></li>
+          <li class="kare"><figure>
+            <div class="kare-cerceve">
+              <img src="assets/img/adana-540.webp" width="540" height="675" loading="lazy" decoding="async" alt="Servis tezgâhında Adana kebap tabağı, eldivenli bir el tabağı uzatıyor">
+              <span class="kare-golge"></span>
+            </div>
+            <figcaption><span class="kare-ad">Adana</span><span class="kare-alt">Tezgâhtan masaya.</span></figcaption>
+          </figure></li>
+          <li class="kare"><figure>
+            <div class="kare-cerceve">
+              <img src="assets/img/ig-ustalar-720.webp" width="720" height="720" loading="lazy" decoding="async" alt="Ustalar mutfakta, ellerinde kebap ve pilav dolu tepsiler">
+              <span class="kare-golge"></span>
+            </div>
+            <figcaption><span class="kare-ad">Mutfak</span><span class="kare-alt">Tepsiler servise çıkıyor.</span></figcaption>
+          </figure></li>
+        </ol>
+      </div>
     </div>
   </section>
 
@@ -196,7 +276,80 @@
     </div>
   </section>
 
-  <!-- 5 · GÖLE 500 M (sessiz) -->
+  <div class="girih-serit" aria-hidden="true"></div>
+
+  <!-- 5 · RAMAZAN / KALABALIK SOFRALAR -->
+  <section class="gruplar" id="gruplar" aria-labelledby="gruplar-baslik">
+    <div class="kap gruplar-ic">
+      <div class="gruplar-metin">
+        <h2 id="gruplar-baslik" class="b2">Kalabalık sofralar</h2>
+        <p>Takım, iş yeri, iftar ya da kalabalık aile sofrası: grup rezervasyonlarını telefonla alıyoruz. Kaç kişi, hangi gün, hangi saat; arayın ya da WhatsApp'tan yazın.</p>
+        <p class="gruplar-tur">Takım yemeği · İş yeri · İftar · Aile sofrası</p>
+        <div class="gruplar-eylem">
+          <a class="dg dg-beyaz" data-tel="rezervasyon" href="tel:+905348243119"><svg class="ik" aria-hidden="true"><use href="#i-tel"/></svg>Ara: <span data-tel-yazi="rezervasyon">0534 824 31 19</span></a>
+          <a class="dg dg-beyaz-cizgi" data-link="whatsapp" href="https://wa.me/905348243119"><svg class="ik" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp'tan yaz</a>
+          <p>Sabit hat: <a data-tel="sabit1" href="tel:+903124843119"><span data-tel-yazi="sabit1">0312 484 31 19</span></a></p>
+        </div>
+      </div>
+      <div class="gruplar-gorsel">
+        <figure class="ramazan-foto">
+          <div class="foto-kutu">
+            <img src="assets/img/ramazan-aksam-720.webp" srcset="assets/img/ramazan-aksam-540.webp 540w, assets/img/ramazan-aksam-720.webp 720w" sizes="(min-width: 900px) 300px, 55vw" width="720" height="900" loading="lazy" decoding="async"
+                 alt="Ramazan'da bir akşam: Mogan Aspava'nın salonu dolu, masalarda aileler ve ikram tabakları">
+          </div>
+          <figcaption>Ramazan'da bir akşam, salon dolu · Şubat 2026</figcaption>
+        </figure>
+        <figure class="ramazan-foto ramazan-sofra">
+          <div class="foto-kutu">
+            <img src="assets/img/ig-iftar-sofrasi-690.webp" width="690" height="1078" sizes="(min-width: 900px) 220px, 40vw" loading="lazy" decoding="async"
+                 alt="İftar için kurulmuş uzun bir sofra: pideler, salatalar, yoğurt, hurma ve küçük ikram kâseleri">
+          </div>
+          <figcaption><a data-link="igIftarSofrasi" href="https://www.instagram.com/p/C4iWjszKEMV/">İftar sofrası, Ramazan 2024</a></figcaption>
+        </figure>
+        <a class="iftar-afis" data-link="igIftar" href="https://www.instagram.com/p/C4fknMwq00I/">
+          <img src="assets/img/ig-iftar-480.webp" width="480" height="480" loading="lazy" decoding="async"
+               alt="Mogan Aspava'nın 2024 Ramazan afişi, İftarda bol ikram: Aspava salata, çiğ köfte, semizotlu yoğurt, patates kızartması, Ramazan pidesi, beyaz peynir, bal, tereyağ, zeytin, hurma, dondurma, irmik tatlısı, sınırsız çay. Rezervasyon 0312 484 31 19, 0312 484 99 78">
+          <span><strong>“İftarda bol ikram”</strong> Restoranın Ramazan afişi: Aspava salata, çiğ köfte, semizotlu yoğurt, Ramazan pidesi, hurma, irmik tatlısı, sınırsız çay ve fazlası.</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · 7/24 AÇIK -->
+  <section class="gece" aria-labelledby="gece-baslik" data-gece>
+    <div class="kap gece-ic">
+      <figure class="gece-foto">
+        <div class="foto-kutu">
+          <img data-foto="cepheGece" src="assets/img/ig-cephe-gece-kalabalik-1080.webp" width="1080" height="609" sizes="(min-width: 1240px) 1128px, 100vw" loading="lazy" decoding="async"
+               alt="Gece Mogan Aspava: tabela ışıklı, kaldırımdaki uzun sıra masalar kalabalık">
+          <span class="gece-karart" data-gece-karart aria-hidden="true"></span>
+        </div>
+        <figcaption><a data-link="igCepheGece" href="https://www.instagram.com/p/CrHYd1QKsVM/">Ankara Caddesi'nde bir gece</a></figcaption>
+      </figure>
+      <svg class="gece-halka" viewBox="0 0 440 440" aria-hidden="true">
+        <g data-halka></g>
+        <g class="gece-saatler"><text x="220" y="16">00</text><text x="430" y="226">06</text><text x="220" y="436">12</text><text x="10" y="226">18</text></g>
+        <g data-simdi></g>
+        <g transform="translate(129 112) scale(1.3)">
+          <defs><clipPath id="bardak-ic"><path d="M22 18h96c-4 22-14 32-14 52s12 34 12 62H24c0-28 12-42 12-62S26 40 22 18z"/></clipPath></defs>
+          <g class="buhar" fill="none" stroke="#b3bcc6" stroke-width="3" stroke-linecap="round"><path d="M52 8c-6-10 6-16 0-26"/><path d="M70 6c-6-10 6-16 0-28"/><path d="M88 8c-6-10 6-16 0-26"/></g>
+          <ellipse cx="70" cy="142" rx="62" ry="11" fill="#cfc8b6"/><ellipse cx="70" cy="138" rx="62" ry="11" fill="#f3efe6"/><ellipse cx="70" cy="137" rx="52" ry="7" fill="#e6dfce"/>
+          <g clip-path="url(#bardak-ic)"><rect class="cay-dolu" x="10" y="30" width="120" height="140" fill="#a8321c"/><rect class="cay-dolu" x="10" y="30" width="120" height="10" fill="#c9532a"/></g>
+          <path d="M22 18h96c-4 22-14 32-14 52s12 34 12 62H24c0-28 12-42 12-62S26 40 22 18z" fill="#f3efe6" fill-opacity=".08" stroke="#f3efe6" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M30 26c2 14 8 26 8 44" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".4"/>
+        </g>
+      </svg>
+      <div class="gece-metin">
+        <h2 id="gece-baslik" class="b2" data-gece-baslik>7/24 açık</h2>
+        <p>Gece yolda acıktıysan ışıklar yanıyor. Gölbaşı'nda, Ankara Caddesi üzerindeyiz.</p>
+        <p class="durum" data-durum><span class="durum-nokta" aria-hidden="true"></span><span data-durum-yazi>Açık</span></p>
+        <a class="dg dg-kirmizi" data-tel="rezervasyon" href="tel:+905348243119"><svg class="ik" aria-hidden="true"><use href="#i-tel"/></svg>Gelmeden ara</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 7 · GÖLE 500 M -->
   <section class="gol" id="gol" aria-labelledby="gol-baslik">
     <div class="kap gol-ic">
       <div class="gol-metin">
@@ -228,7 +381,6 @@
           <text x="404" y="150" class="h-yazi h-yazi-pin" text-anchor="middle">Mogan Aspava</text>
           <g transform="translate(528 34)" class="h-kuzey"><path d="M0-14l7 18-7-5-7 5z"/><text y="22" text-anchor="middle">K</text></g>
         </svg>
-        <figcaption>Harita verisi © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap katkıda bulunanlar</a> (ODbL). Rota: OSRM yaya rotası.</figcaption>
       </figure>
     </div>
     <figure class="gol-genis">
@@ -255,38 +407,7 @@
     </div>
   </section>
 
-  <!-- 6 · GECE DE AÇIK -->
-  <section class="gece" aria-labelledby="gece-baslik" data-gece>
-    <div class="kap gece-ic">
-      <svg class="gece-halka" viewBox="0 0 440 440" aria-hidden="true">
-        <g data-halka></g>
-        <g class="gece-saatler"><text x="220" y="16">00</text><text x="430" y="226">06</text><text x="220" y="436">12</text><text x="10" y="226">18</text></g>
-        <g data-simdi></g>
-        <g transform="translate(129 112) scale(1.3)">
-          <defs><clipPath id="bardak-ic"><path d="M22 18h96c-4 22-14 32-14 52s12 34 12 62H24c0-28 12-42 12-62S26 40 22 18z"/></clipPath></defs>
-          <g class="buhar" fill="none" stroke="#b3bcc6" stroke-width="3" stroke-linecap="round"><path d="M52 8c-6-10 6-16 0-26"/><path d="M70 6c-6-10 6-16 0-28"/><path d="M88 8c-6-10 6-16 0-26"/></g>
-          <ellipse cx="70" cy="142" rx="62" ry="11" fill="#cfc8b6"/><ellipse cx="70" cy="138" rx="62" ry="11" fill="#f3efe6"/><ellipse cx="70" cy="137" rx="52" ry="7" fill="#e6dfce"/>
-          <g clip-path="url(#bardak-ic)"><rect class="cay-dolu" x="10" y="30" width="120" height="140" fill="#a8321c"/><rect class="cay-dolu" x="10" y="30" width="120" height="10" fill="#c9532a"/></g>
-          <path d="M22 18h96c-4 22-14 32-14 52s12 34 12 62H24c0-28 12-42 12-62S26 40 22 18z" fill="#f3efe6" fill-opacity=".08" stroke="#f3efe6" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M30 26c2 14 8 26 8 44" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".4"/>
-        </g>
-      </svg>
-      <div class="gece-metin">
-        <h2 id="gece-baslik" class="b2" data-gece-baslik>Gece de açık</h2>
-        <p data-gece-giris>Gece yolda acıktıysan ışıklar yanıyor. Gölbaşı'nda, Ankara Caddesi üzerindeyiz.</p>
-        <p class="durum" data-durum><span class="durum-nokta" aria-hidden="true"></span><span data-durum-yazi>Açık</span></p>
-        <a class="dg dg-kirmizi" data-tel="rezervasyon" href="tel:+905348243119"><svg class="ik" aria-hidden="true"><use href="#i-tel"/></svg>Gelmeden ara</a>
-      </div>
-      <figure class="gece-foto">
-        <img src="assets/img/cephe-gece-540.webp" srcset="assets/img/cephe-gece-540.webp 540w, assets/img/cephe-gece-720.webp 720w"
-             sizes="(min-width: 900px) 280px, 70vw" width="720" height="880" loading="lazy" decoding="async"
-             alt="Gece Mogan Aspava'nın cephesi: kırmızı ASPAVA tabelası, girişte kırmızı halı">
-        <figcaption>Ankara Caddesi'nde, gece</figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <!-- 6b · MASADAN SESLER -->
+  <!-- 8 · MASADAN SESLER -->
   <section class="yorum" id="yorumlar" aria-labelledby="yorum-baslik">
     <div class="kap">
       <div class="yorum-bas">
@@ -304,42 +425,68 @@
     </div>
   </section>
 
-  <!-- 7 · KALABALIK SOFRALAR -->
-  <section class="gruplar" id="gruplar" aria-labelledby="gruplar-baslik">
-    <div class="kap gruplar-ic">
-      <div>
-        <h2 id="gruplar-baslik" class="b2">Kalabalık geliyorsanız önceden arayın</h2>
-        <p>Takım, iş yeri, iftar ya da kalabalık aile sofrası: grup rezervasyonlarını telefonla alıyoruz. Kaç kişi, hangi gün, hangi saat; arayın ya da WhatsApp'tan yazın.</p>
-        <p class="gruplar-tur">Takım yemeği · İş yeri · İftar · Aile sofrası</p>
-      </div>
-      <div class="gruplar-eylem">
-        <a class="dg dg-beyaz" data-tel="rezervasyon" href="tel:+905348243119"><svg class="ik" aria-hidden="true"><use href="#i-tel"/></svg>Ara: <span data-tel-yazi="rezervasyon">0534 824 31 19</span></a>
-        <a class="dg dg-beyaz-cizgi" data-link="whatsapp" href="https://wa.me/905348243119"><svg class="ik" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp'tan yaz</a>
-        <p>Sabit hat: <a data-tel="sabit1" href="tel:+903124843119"><span data-tel-yazi="sabit1">0312 484 31 19</span></a></p>
-      </div>
-    </div>
-  </section>
+  <div class="girih-serit" aria-hidden="true"></div>
 
-  <!-- 8 · 1988 -->
+  <!-- 9 · 1988 · KURUCULAR: akan galeri (fotoğraflar kırpılmadan, bütün halde) -->
   <section class="kurulus" aria-labelledby="kurulus-baslik">
     <div class="kap kurulus-ic">
-      <p class="kurulus-yil" aria-hidden="true">1988</p>
-      <div>
+      <p class="kurulus-yil" aria-hidden="true"><span class="yil-cizgi">1988</span><span class="yil-dolu" data-yil-dolu>1988</span></p>
+      <div class="kurulus-metin">
         <h2 id="kurulus-baslik" class="b2">1988'den beri Gölbaşı'nda</h2>
-        <p>Mogan Aspava, 1988'de Gölbaşı'nda iki ortak tarafından kuruldu: Erol Akgeyik ve Cemal Çetinkaya. Restoranın sahipleri bugün de onlar.</p>
+        <p>Mogan Aspava'yı 1988'de Gölbaşı'nda Erol Akgeyik ve Cemal Çetinkaya kurdu. Restoranın sahipleri bugün de onlar.</p>
         <p class="slogan">“Lezzet sunmak sanat, tatmak ise mutluluktur.”</p>
       </div>
     </div>
+    <div class="galeri" data-galeri>
+      <ul class="galeri-serit" data-galeri-serit>
+        <li class="galeri-kare" data-foto-kutu="kurucu">
+          <figure>
+            <div class="foto-kutu"><img data-foto="kurucu" src="assets/img/erol-akgeyik-ahmet-buran-724.webp" width="724" height="1000" loading="lazy" decoding="async"
+                 alt="Erol Akgeyik ve Ahmet Buran, Mogan Aspava'nın girişinde, altın renkli yıldız desenli sütunun yanında"></div>
+            <figcaption data-foto-yazi="kurucu">Erol Akgeyik ve Ahmet Buran, Mogan Aspava'nın önünde</figcaption>
+          </figure>
+        </li>
+        <li class="galeri-kare">
+          <figure>
+            <div class="foto-kutu"><img src="assets/img/ig-kapi-onu-kurucular-900.webp" width="900" height="1125" loading="lazy" decoding="async"
+                 alt="Üç kişi Mogan Aspava'nın cam kapısının önünde yan yana gülümsüyor"></div>
+            <figcaption><a data-link="igKapiOnu" href="https://www.instagram.com/p/CuxYam-qFjE/">Mogan Aspava'nın önünde, 2023</a></figcaption>
+          </figure>
+        </li>
+        <li class="galeri-kare">
+          <figure>
+            <div class="foto-kutu"><img src="assets/img/ig-dis-masa-kurucular-900.webp" width="900" height="900" loading="lazy" decoding="async"
+                 alt="Dış masada oturan iki kişi, masada su şişeleri ve servis tabakları"></div>
+            <figcaption><a data-link="igDisMasa" href="https://www.instagram.com/p/CuxaMCDq92G/">Dış masalarda bir yaz günü</a></figcaption>
+          </figure>
+        </li>
+        <li class="galeri-kare">
+          <figure>
+            <div class="foto-kutu"><img data-foto="cepheGunduz" src="assets/img/ig-cephe-gunduz-1065.webp" width="1065" height="710" loading="lazy" decoding="async"
+                 alt="Gündüz Mogan Aspava: desenli ASPAVA tabelası, MOGAN ASPAVA 7/24 tentesi ve kaldırım boyunca dış masalar"></div>
+            <figcaption><a data-link="igCepheGunduz" href="https://www.instagram.com/p/C_iNil7q9g5/">Ankara Caddesi No:116/C, gündüz</a></figcaption>
+          </figure>
+        </li>
+        <li class="galeri-kare">
+          <figure>
+            <div class="foto-kutu"><img data-foto="cepheAksam" src="assets/img/ig-cephe-aksam-1080.webp" width="1080" height="1077" loading="lazy" decoding="async"
+                 alt="Gün batarken Mogan Aspava'nın köşe cephesi: ışıkları yanmış tabela ve kaldırımdaki dolu masalar"></div>
+            <figcaption><a data-link="igCepheAksam" href="https://www.instagram.com/p/CBsgaJxDW94/">Gün batarken</a></figcaption>
+          </figure>
+        </li>
+      </ul>
+    </div>
   </section>
 
-  <!-- 9 · INSTAGRAM -->
+  <!-- 10 · INSTAGRAM -->
   <section class="ig" aria-labelledby="ig-baslik">
     <div class="kap">
       <h2 id="ig-baslik" class="b2">Instagram'da <a data-link="instagram" href="https://www.instagram.com/moganaspava/">@moganaspava</a></h2>
       <ul class="ig-serit">
-        <li><a data-link="instagram" href="https://www.instagram.com/moganaspava/"><img src="assets/img/reel-r1.webp" width="480" height="600" loading="lazy" decoding="async" alt="Tabela videosu: MOGAN ASPAVA, 7/24 açık levhası"><span>Gece de açık</span></a></li>
-        <li><a data-link="instagram" href="https://www.instagram.com/moganaspava/"><img src="assets/img/reel-r2.webp" width="480" height="600" loading="lazy" decoding="async" alt="Sofra videosu: ana yemek tabağı ve çevresinde ikram tabakları"><span>Sofra kuruluyor</span></a></li>
-        <li><a data-link="instagram" href="https://www.instagram.com/moganaspava/"><img src="assets/img/reel-r3.webp" width="480" height="600" loading="lazy" decoding="async" alt="Göl videosu: gün batımında Mogan Gölü, yemekten sonra göl kıyısı yaklaşık 500 metre"><span>Göle 500 m</span></a></li>
+        <li><a data-link="igAksam" href="https://www.instagram.com/p/DVRNgEnDVTI/"><img src="assets/img/ig-aksam-kirpik-480.webp" width="472" height="590" loading="lazy" decoding="async" alt="Gece Mogan Aspava'nın ışıklı tabelası ve kırmızı halılı girişi"><span>7/24 açık</span></a></li>
+        <li><a data-link="igEtDoner" href="https://www.instagram.com/p/DaIGhO7gnJY/"><img src="assets/img/ig-etdoner-480.webp" width="480" height="633" loading="lazy" decoding="async" alt="Hafta sonu aspava özel et döner afişi: döner tabağı ve çevresinde ikram tabakları"><span>Sınırsız ikram</span></a></li>
+        <li><a data-link="igDoner" href="https://www.instagram.com/p/DZhvPzIgYqt/"><img src="assets/img/ig-doner-480.webp" width="480" height="852" loading="lazy" decoding="async" alt="Akşamüstü Mogan Aspava'nın cephesi, 7/24 levhası ve dışarıdaki masalar"><span>Ustanın döneri</span></a></li>
+        <li><a data-link="igSsk" href="https://www.instagram.com/p/DZXppWUMggg/"><img src="assets/img/ig-ssk-480.webp" width="480" height="633" loading="lazy" decoding="async" alt="SSK dürüm afişi: tabakta dilimlenmiş dürümler"><span>Bir aspava klasiği: SSK</span></a></li>
       </ul>
     </div>
   </section>
@@ -379,7 +526,7 @@
         </ul>
       </div>
     </div>
-    <p class="kunye">Fotoğraflar: Mogan Gölü gün batımı, Vikiçizer, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Mogan_G%C3%B6l%C3%BC.JPG">Wikimedia Commons</a> · Mogan Parkı seyir kulesi, Tevfik Teker, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Lake_Mogan.jpg">Wikimedia Commons</a> · Göl kıyısı, İZGİ ÖRS, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:G%C3%B6l_Manzara.jpg">Wikimedia Commons</a>. Fotoğraflar boyutlandırıldı. Yemek ve mekan görselleri: Mogan Aspava'nın Instagram hesabı ve Yemeksepeti sayfası. Yorumlar: Google, Yemeksepeti ve Migros Yemek'teki herkese açık misafir yorumlarından kısa alıntılar. Harita verisi © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap katkıda bulunanlar</a>, ODbL.</p>
+    <p class="kunye">Mekân ve mutfak fotoğrafları: Mogan Aspava'nın Instagram hesabındaki (<a data-link="instagram" href="https://www.instagram.com/moganaspava/">@moganaspava</a>) gönderi ve videolardan kareler; Ramazan afişi ve Instagram şeridindeki görseller de oradan. Menü ve sofra görselleri: Mogan Aspava'nın <a data-link="yemeksepeti" href="https://www.yemeksepeti.com/restaurant/q0pi/mogan-aspava-q0pi">Yemeksepeti</a> sayfası. Mogan Gölü gün batımı, Vikiçizer, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Mogan_G%C3%B6l%C3%BC.JPG">Wikimedia Commons</a> · Mogan Parkı seyir kulesi, Tevfik Teker, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Lake_Mogan.jpg">Wikimedia Commons</a> · Göl kıyısı, İZGİ ÖRS, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:G%C3%B6l_Manzara.jpg">Wikimedia Commons</a>. Fotoğraflar boyutlandırıldı ve kırpıldı. Tabela deseni, cephedeki geometrik kafesten çizildi. Yorumlar: Google, Yemeksepeti ve Migros Yemek'teki herkese açık misafir yorumlarından kısa alıntılar. Harita verisi © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap katkıda bulunanlar</a>, ODbL.</p>
   </div>
 </footer>
 
@@ -403,7 +550,9 @@
   </div>
 </dialog>
 
-<script src="js/veri.js"></script>
+<!-- GSAP 3.12.5 + ScrollTrigger: siteyle birlikte barındırılır (standart lisans, js/lib) -->
+<script src="js/lib/gsap.min.js"></script>
+<script src="js/lib/ScrollTrigger.min.js"></script>
 <script src="js/site.js"></script>
 </body>
 </html>
