@@ -256,9 +256,9 @@
     var KALP = "M12 21s-7.5-4.6-9.5-9.2C1.2 8.6 3.2 5 6.6 5c2 0 3.4 1.1 4.2 2.4h2.4C14 6.1 15.4 5 17.4 5c3.4 0 5.4 3.6 4.1 6.8C19.5 16.4 12 21 12 21z";
     var KISI = "M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zm-8 9c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5z";
     var CANTA = "M5 8h14l-1.2 12H6.2L5 8zm4 0V6a3 3 0 0 1 6 0v2";
-    var sayac = {};
+    var tepkiSayac = {};
     V.yorumlar.forEach(function (y, i) {
-      var tepkiSira = sayac[y.yer] = (sayac[y.yer] || 0) + 1;
+      var tepkiSira = tepkiSayac[y.yer] = (tepkiSayac[y.yer] || 0) + 1;
       var li = el("li", { "class": "fis", "data-yer": y.yer });
       var egim = (((i * 37) % 5 - 2) * .35).toFixed(2) + "deg";
       li.style.setProperty("--egim", egim); li.dataset.egim = egim;
@@ -327,7 +327,8 @@
   saatleriYaz();
   setInterval(saatleriYaz, 60000);
   var gece = $("[data-gece]");
-  gorununce(gece, .3, function () { gece.classList.add("is-on"); });
+  /* Halka ve çay, sahnenin kendisi görününce başlar (bölümün üstündeki gece fotoğrafı değil). */
+  gorununce($(".gece-halka"), .5, function () { gece.classList.add("is-on"); });
 
   /* ---------- Mutfaktan: video yalnızca görünürken oynar ---------- */
   var mutfakVideo = $("[data-mutfak-video]");
@@ -448,7 +449,7 @@
     /* 7 · Göle 500 m: kaydırdıkça rota çizilir, sayaç 0 → 500 m; ardından gün batımı yaklaşır */
     if (haritaSvg && sayac) {
       gsap.fromTo(haritaSvg, { "--p": 0 }, { "--p": 1, ease: "none",
-        scrollTrigger: { trigger: harita, start: "top 85%", end: "bottom 55%", scrub: true },
+        scrollTrigger: { trigger: harita, start: "top 85%", end: "center 60%", scrub: true },
         onUpdate: function () { sayac.textContent = String(Math.round(this.progress() * 50) * 10); } });
     }
     gsap.fromTo(".gol-genis img", { scale: 1.18 }, { scale: 1, ease: "none",
