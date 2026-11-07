@@ -42,6 +42,8 @@ a:hover { color: #fff; }
 button { font: inherit; color: inherit; }
 ::selection { background: var(--kirmizi); color: #fff; }
 :focus-visible { outline: 3px solid var(--odak); outline-offset: 3px; border-radius: 2px; }
+/* hidden özniteliği her zaman kazanır (display:flex/grid veren sınıflar onu ezmesin) */
+[hidden] { display: none !important; }
 .gizli { position: absolute; width: 0; height: 0; overflow: hidden; }
 .ekran-oku { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .atla { position: absolute; left: 16px; top: -60px; z-index: 50; background: var(--sodyum); color: var(--gece); padding: 12px 16px; font-weight: 600; border-radius: 4px; }
@@ -358,20 +360,32 @@ figcaption a { display: inline-flex; align-items: center; min-height: 32px; font
 .yorum-bas { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px 40px; margin-bottom: 24px; }
 .yorum-bas p { color: var(--gri); max-width: 46ch; }
 .secim-uc { grid-template-columns: repeat(3, 1fr); max-width: 420px; }
-.yorum-serit { display: flex; gap: 16px; margin: 24px calc(-1 * var(--gutter)) 0; padding: 14px var(--gutter) 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); scrollbar-width: thin; }
-.fis { position: relative; flex: 0 0 min(82%, 320px); scroll-snap-align: start; display: flex; flex-direction: column; gap: 14px; padding: 26px 22px 20px; background: var(--krem); color: var(--gece); border-radius: 2px; box-shadow: 0 12px 26px rgb(0 0 0 / .35); }
-.fis::before { content: ""; position: absolute; left: 0; right: 0; top: -6px; height: 12px; background: radial-gradient(circle at 6px 0, transparent 5px, var(--krem) 5.5px) 0 6px / 12px 12px repeat-x; }
-.fis blockquote { margin: 0; flex: 1; }
-.fis blockquote p { font-size: 1.1rem; line-height: 1.5; font-weight: 600; }
-.fis-alt { font-size: .9rem; color: var(--gri-koyu); padding-top: 12px; border-top: 1px dashed #c9c1ae; }
-.fis-yer { align-self: flex-start; font-family: var(--tabela); font-weight: 800; font-stretch: 115%; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: #fff; background: var(--kirmizi); padding: 4px 8px; border-radius: 2px; }
+/* Yorum duvarı: Google yorumu gibi kartlar, masonry sütunlar, köşede tepki rozeti */
+.yorum-serit { columns: 3 290px; column-gap: 18px; margin: 28px 0 0; padding: 0; }
+.fis { position: relative; break-inside: avoid; display: inline-flex; width: 100%; vertical-align: top; flex-direction: column; gap: 12px; margin: 14px 0 8px; padding: 20px 20px 22px; background: var(--krem); color: var(--gece); border-radius: 10px; box-shadow: 0 1px 0 rgb(255 255 255 / .6) inset, 0 14px 28px rgb(0 0 0 / .38); transform: rotate(var(--egim, 0deg)); transform-origin: 50% 0; transition: transform .25s var(--ease), box-shadow .25s var(--ease); }
+.fis:hover { transform: rotate(0deg) translateY(-3px); box-shadow: 0 1px 0 rgb(255 255 255 / .6) inset, 0 20px 36px rgb(0 0 0 / .45); }
+.fis[data-yer="pakette"] { background: #fbf8f1; }
+.fis-ust { display: flex; align-items: center; gap: 10px; }
+.fis-avatar { flex: none; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: var(--kirmizi); color: #fff; }
+.fis[data-yer="pakette"] .fis-avatar { background: var(--gece); }
+.fis-avatar svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; }
+.fis-kim { display: flex; flex-direction: column; min-width: 0; line-height: 1.25; }
+.fis-kaynak { font-weight: 600; font-size: .98rem; }
+.fis-tarih { font-size: .86rem; color: var(--gri-koyu); }
+.fis-yer { margin-left: auto; font-family: var(--tabela); font-weight: 800; font-stretch: 115%; font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: #fff; background: var(--kirmizi); padding: 4px 8px; border-radius: 3px; }
 .fis[data-yer="pakette"] .fis-yer { background: var(--gece); }
-.yorum-alt { margin-top: 12px; color: var(--gri); }
+.fis-yildiz { display: flex; gap: 2px; }
+.fis-yildiz svg { width: 18px; height: 18px; fill: #d6cfc0; }
+.fis-yildiz svg.dolu { fill: #e8a317; }
+.fis blockquote { margin: 0; }
+.fis blockquote p { font-size: 1.08rem; line-height: 1.5; font-weight: 600; }
+.fis-tepki { position: absolute; right: -10px; top: -12px; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #2f6fde; color: #fff; border: 3px solid var(--gece); box-shadow: 0 6px 14px rgb(0 0 0 / .35); }
+.fis-tepki-kalp { background: var(--kirmizi); }
+.fis-tepki svg { width: 20px; height: 20px; fill: currentColor; }
+.yorum-daha-kap { display: flex; justify-content: center; margin-top: 8px; }
+.yorum-alt { margin-top: 16px; color: var(--gri); }
 .yorum-alt a { color: var(--krem); font-weight: 600; display: inline-flex; align-items: center; min-height: 44px; }
-@media (min-width: 900px) {
-  .yorum-serit { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 24px 0 0; padding: 14px 0 0; overflow: visible; }
-  .fis { flex: none; }
-}
+@media (max-width: 640px) { .yorum-serit { columns: 1; } .fis { transform: none; } }
 
 /* 9 · 1988 · kurucular: metin, sonra kırpılmamış fotoğraflardan akan bir galeri */
 .kurulus { padding: clamp(56px, 7vw, 104px) 0 clamp(48px, 6vw, 88px); overflow: clip; }

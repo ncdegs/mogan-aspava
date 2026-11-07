@@ -246,29 +246,80 @@
   var serit = $("[data-yorumlar]");
   if (serit && V.yorumlar) {
     var KAYNAK_ADI = { "Google": "Google yorumu", "Yemeksepeti": "Yemeksepeti yorumu", "Migros Yemek": "Migros Yemek yorumu" };
-    V.yorumlar.forEach(function (y) {
+    var SVG = "http://www.w3.org/2000/svg";
+    var ikonYap = function (yol, sinif) {
+      var s = document.createElementNS(SVG, "svg"); s.setAttribute("viewBox", "0 0 24 24"); s.setAttribute("aria-hidden", "true"); if (sinif) s.setAttribute("class", sinif);
+      var p = document.createElementNS(SVG, "path"); p.setAttribute("d", yol); s.appendChild(p); return s;
+    };
+    var YILDIZ = "M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z";
+    var BEGENI = "M7 10v11H3V10h4zm2 11h8.6a2 2 0 0 0 2-1.6l1.3-6.5A2 2 0 0 0 19 10.5h-5.2l.8-3.9a1.8 1.8 0 0 0-3.3-1.3L9 10v11z";
+    var KALP = "M12 21s-7.5-4.6-9.5-9.2C1.2 8.6 3.2 5 6.6 5c2 0 3.4 1.1 4.2 2.4h2.4C14 6.1 15.4 5 17.4 5c3.4 0 5.4 3.6 4.1 6.8C19.5 16.4 12 21 12 21z";
+    var KISI = "M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zm-8 9c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5z";
+    var CANTA = "M5 8h14l-1.2 12H6.2L5 8zm4 0V6a3 3 0 0 1 6 0v2";
+    var sayac = {};
+    V.yorumlar.forEach(function (y, i) {
+      var tepkiSira = sayac[y.yer] = (sayac[y.yer] || 0) + 1;
       var li = el("li", { "class": "fis", "data-yer": y.yer });
-      var bq = el("blockquote"), p = el("p"), alt = el("p", { "class": "fis-alt" }), etiket = el("span", { "class": "fis-yer" });
-      p.textContent = "“" + y.metin + "”";
-      alt.textContent = (KAYNAK_ADI[y.kaynak] || y.kaynak) + " · " + y.tarih;
-      etiket.textContent = y.yer === "pakette" ? "Pakette" : "Salonda";
-      bq.appendChild(p); li.appendChild(etiket); li.appendChild(bq); li.appendChild(alt);
+      var egim = (((i * 37) % 5 - 2) * .35).toFixed(2) + "deg";
+      li.style.setProperty("--egim", egim); li.dataset.egim = egim;
+      var ust = el("div", { "class": "fis-ust" }), avatar = el("span", { "class": "fis-avatar" });
+      avatar.appendChild(ikonYap(y.yer === "pakette" ? CANTA : KISI));
+      var kim = el("div", { "class": "fis-kim" }), kaynak = el("span", { "class": "fis-kaynak" }), tarih = el("span", { "class": "fis-tarih" });
+      kaynak.textContent = KAYNAK_ADI[y.kaynak] || y.kaynak; tarih.textContent = y.tarih;
+      kim.appendChild(kaynak); kim.appendChild(tarih);
+      var etiket = el("span", { "class": "fis-yer" }); etiket.textContent = y.yer === "pakette" ? "Pakette" : "Salonda";
+      ust.appendChild(avatar); ust.appendChild(kim); ust.appendChild(etiket); li.appendChild(ust);
+      if (y.yildiz) {
+        var yz = el("div", { "class": "fis-yildiz", role: "img", "aria-label": y.yildiz + " üzerinden 5 yıldız" });
+        for (var k = 0; k < 5; k++) yz.appendChild(ikonYap(YILDIZ, k < y.yildiz ? "dolu" : ""));
+        li.appendChild(yz);
+      }
+      var bq = el("blockquote"), p = el("p"); p.textContent = "“" + y.metin + "”"; bq.appendChild(p); li.appendChild(bq);
+      var tepki = el("span", { "class": "fis-tepki fis-tepki-" + (tepkiSira % 3 === 2 ? "kalp" : "begeni") });
+      tepki.appendChild(ikonYap(tepkiSira % 3 === 2 ? KALP : BEGENI)); li.appendChild(tepki);
       serit.appendChild(li);
     });
-    var yorumSuz = function (yer) {
-      var sayi = 0, gorunen = [];
-      $$("[data-yorum]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.yorum === yer)); });
-      $$(".fis", serit).forEach(function (li) { var goster = yer === "hepsi" || li.dataset.yer === yer; li.hidden = !goster; if (goster) { sayi++; gorunen.push(li); } });
-      serit.scrollLeft = 0;
-      $$(".fis", serit).forEach(function (li) { li.style.clipPath = ""; });
-      if (!azHareket) {
-        gorunen.slice(0, 6).forEach(function (li, i) {
-          li.animate([{ opacity: 0, transform: "translateY(10px)" }, { opacity: 1, transform: "none" }], { duration: 300, delay: i * 45, easing: EASE, fill: "backwards" });
-        });
-      }
-      $("[data-yorum-duyuru]").textContent = sayi + " yorum gösteriliyor.";
+    var ADIM = 9, yorumYer = "hepsi", yorumSinir = ADIM, dahaDg = $("[data-yorum-daha]");
+    var POP = "cubic-bezier(.34,1.56,.64,1)";
+    var patlat = function (lis) {
+      if (azHareket) return;
+      lis.forEach(function (li, i) {
+        var r = window.innerWidth > 640 ? li.dataset.egim : "0deg";
+        li.animate([{ opacity: 0, transform: "translateY(22px) scale(.86) rotate(" + r + ")" }, { opacity: 1, transform: "translateY(0) scale(1) rotate(" + r + ")" }],
+          { duration: 520, delay: i * 90, easing: POP, fill: "backwards" });
+        var t = $(".fis-tepki", li);
+        if (t) t.animate([{ transform: "scale(0) rotate(-20deg)" }, { transform: "scale(1.25) rotate(8deg)", offset: .7 }, { transform: "scale(1) rotate(0)" }],
+          { duration: 460, delay: i * 90 + 320, easing: "ease-out", fill: "backwards" });
+      });
     };
-    $$("[data-yorum]").forEach(function (b) { b.addEventListener("click", function () { yorumSuz(b.dataset.yorum); }); });
+    var yorumGoster = function (animasyon) {
+      var uygun = $$(".fis", serit).filter(function (li) { return yorumYer === "hepsi" || li.dataset.yer === yorumYer; });
+      var yeni = [];
+      $$(".fis", serit).forEach(function (li) {
+        var sira = uygun.indexOf(li), goster = sira > -1 && sira < yorumSinir;
+        if (goster && li.hidden !== false) yeni.push(li);
+        li.hidden = !goster;
+      });
+      if (dahaDg) { var kalan = uygun.length - Math.min(yorumSinir, uygun.length); dahaDg.hidden = kalan <= 0; dahaDg.textContent = "Daha fazla yorum (" + kalan + ")"; }
+      $("[data-yorum-duyuru]").textContent = Math.min(yorumSinir, uygun.length) + " / " + uygun.length + " yorum gösteriliyor.";
+      if (animasyon) patlat(yeni);
+    };
+    $$(".fis", serit).forEach(function (li) { li.hidden = true; });
+    var yorumIlk = false;
+    yorumGoster(false);
+    $$("[data-yorum]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        yorumYer = b.dataset.yorum; yorumSinir = ADIM;
+        $$("[data-yorum]").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+        $$(".fis", serit).forEach(function (li) { li.hidden = true; });
+        yorumGoster(true);
+      });
+    });
+    if (dahaDg) dahaDg.addEventListener("click", function () { yorumSinir += ADIM; yorumGoster(true); });
+    gorununce(serit, .15, function () {
+      if (yorumIlk) return; yorumIlk = true;
+      patlat($$(".fis:not([hidden])", serit));
+    });
   }
 
   /* ---------- 7/24 açık ---------- */
@@ -404,13 +455,7 @@
       scrollTrigger: { trigger: ".gol-genis", start: "top bottom", end: "bottom 35%", scrub: true } });
 
     /* 8 · Masadan sesler: fişler yazar kasadan çıkar gibi yukarıdan aşağı belirir (bir kez) */
-    if (serit) {
-      var fisler = $$(".fis:not([hidden])", serit).slice(0, 6);
-      gsap.set(fisler, { clipPath: "inset(-12px 0% 100% 0%)" });
-      ST.create({ trigger: serit, start: "top 80%", once: true, onEnter: function () {
-        gsap.to(fisler, { clipPath: "inset(-12px 0% -40px 0%)", duration: .7, stagger: .08, ease: "expo.out", clearProps: "clipPath" });
-      } });
-    }
+    /* (Yorum fişlerinin açılır animasyonu yukarıda, GSAP'sız: Web Animations.) */
 
     /* 9 · 1988: kırmızı rakamlar kepenk gibi dolar; galerideki fotoğraflar sırayla alttan açılır */
     gsap.fromTo("[data-yil-dolu]", { clipPath: KEPENK_KAPALI }, { clipPath: ACIK, ease: "none",
