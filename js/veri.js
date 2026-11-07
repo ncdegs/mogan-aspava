@@ -9,9 +9,9 @@ window.MOGAN = {
   saat: { tip: "7/24" },
 
   tel: {
-    rezervasyon: { goster: "0534 824 31 19", href: "tel:+905348243119" },
+    rezervasyon: { goster: "0312 484 99 78", href: "tel:+903124849978" },
     sabit1: { goster: "0312 484 31 19", href: "tel:+903124843119" },
-    sabit2: { goster: "0312 484 99 78", href: "tel:+903124849978" }
+    cep: { goster: "0534 824 31 19", href: "tel:+905348243119" }   // WhatsApp da bu hatta
   },
 
   linkler: {
